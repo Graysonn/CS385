@@ -2,7 +2,7 @@ package com.example.andrew.andyminiblue;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Looper;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +18,6 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -58,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         reset.setOnClickListener(this);
 
         TextView scr = (TextView) findViewById(R.id.Score);
+
         TextView compscr = (TextView) findViewById(R.id.PCScore);
         scr.setText("Player:0");
         compscr.setText("Computer:0");
@@ -138,11 +137,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
+
+
+
         TextView scr=(TextView) findViewById(R.id.Score);
         final TextView compscr=(TextView) findViewById(R.id.PCScore);
         TextView WinCount=(TextView) findViewById(R.id.WinCount);
         TextView LossCount=(TextView) findViewById(R.id.LossCount);
+        final TextView cent= (TextView) findViewById(R.id.textView2);
+
 
 
 
@@ -153,24 +157,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 while(compscore<16) {
 
-                    card card2 = deck1.getCard();
-                    if (card2.getValue() == 1 && compscore < 11) {
-                        compscore += 11;
-                        compace++;
-                    } else if(compscore>10)
-                    {
-                        compscore+=10;
-                    }
-                    else{
-                        compscore += card2.getValue();
-                    }
+                    compscore+=drawcard();
+
                     if (compscore > 21 & compace > 0) {
                         compscore -= 10;
                         compace--;
                     }
                     pcScore="Computer: "+compscore;
                     compscr.setText(pcScore);
-
                 }
                 if((score>compscore && score<22) || (score<22 && compscore>21))
                 {
@@ -187,7 +181,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.addCard:
                 card card1=deck1.getCard();
-                Toast.makeText(v.getContext(), "Your new card is "+card1.getRank()+" of "+card1.getSuit(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), "Your new card is "+card1.getRank()+" of "+card1.getSuit(), Toast.LENGTH_SHORT).show();
+                cent.setText("current card's score is "+card1.getValue());
+
                 if (card1.getValue()==1 && score<11)
                 {
                     score+=11;
@@ -233,6 +229,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deck1 = new deck();
         addCard.setEnabled(true);
     }
+    public int drawcard()
+    {
+        final int[] ans = new int[1];
+        final TextView cent= (TextView) findViewById(R.id.textView2);
+        final card card2 = deck1.getCard();
+        Handler myhandler=new Handler();
 
+
+        myhandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                //Toast.makeText(v.getContext(), "Computer's new card is "+card2.getRank()+" of "+card2.getSuit(), Toast.LENGTH_SHORT).show();
+                cent.setText("current card's score is "+card2.getValue());
+
+
+        if (card2.getValue() == 1 && compscore < 11) {
+
+            compace++;
+            ans[0] = 11;
+        } else if(card2.getValue()>10)
+        {
+            ans[0] =10;
+        }
+        else{
+            ans[0] = card2.getValue();
+        }
+
+
+            }
+        }, 3000);
+        return ans[0];
+    }
 
 }

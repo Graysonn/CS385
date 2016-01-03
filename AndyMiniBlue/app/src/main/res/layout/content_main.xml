@@ -9,15 +9,17 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.andrew.andyminiblue.MainActivity">
+    tools:context="com.example.andrew.andyminiblue.MainActivity"
+    android:background="@drawable/background300300">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Intro"
         android:id="@+id/textView2"
-        android:layout_marginTop="125dp"
-        android:layout_alignParentTop="true"
+        style="@style/Info"
+        android:textSize="30dp"
+        android:layout_above="@+id/Score"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -25,9 +27,8 @@
         android:layout_height="wrap_content"
         android:text="Stick"
         android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/Score"
-        android:layout_marginBottom="84dp" />
+        android:layout_above="@+id/reset"
+        android:layout_toEndOf="@+id/reset" />
 
     <Button
         android:layout_width="wrap_content"
@@ -35,7 +36,7 @@
         android:text="Hit Me"
         android:id="@+id/addCard"
         android:layout_alignTop="@+id/button"
-        android:layout_toStartOf="@+id/textView2" />
+        android:layout_toStartOf="@+id/reset" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,7 +46,8 @@
         android:id="@+id/Score"
         android:textSize="50dp"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        style="@style/Playerscore"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -55,7 +57,8 @@
         android:id="@+id/PCScore"
         android:textSize="50dp"
         android:layout_below="@+id/Score"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        style="@style/PCscore" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -64,7 +67,8 @@
         android:text="Reset"
         android:id="@+id/reset"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -74,7 +78,8 @@
         android:id="@+id/WinCount"
         android:layout_marginTop="41dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        style="@style/Info"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -82,7 +87,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="No. of Loss&apos;: 0"
         android:id="@+id/LossCount"
-        android:layout_alignTop="@+id/textView2"
-        android:layout_alignParentStart="true" />
+        style="@style/Info"
+        android:layout_below="@+id/WinCount"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="41dp" />
 
 </RelativeLayout>
