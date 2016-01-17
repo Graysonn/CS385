@@ -1,5 +1,6 @@
 package com.example.andrew.andyminiblue;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -157,7 +158,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 while(compscore<16) {
 
-                    compscore+=drawcard();
+
+                    Thread timer = new Thread() {
+                        public void run() {
+                            try {
+                                sleep(5000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            finally{
+                                compscore+=drawcard();
+                            }
+                        }
+                    };
+                    timer.start();
+
+
 
                     if (compscore > 21 & compace > 0) {
                         compscore -= 10;
@@ -234,16 +250,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final int[] ans = new int[1];
         final TextView cent= (TextView) findViewById(R.id.textView2);
         final card card2 = deck1.getCard();
-        Handler myhandler=new Handler();
 
 
-        myhandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
 
-                //Toast.makeText(v.getContext(), "Computer's new card is "+card2.getRank()+" of "+card2.getSuit(), Toast.LENGTH_SHORT).show();
-                cent.setText("current card's score is "+card2.getValue());
 
+
+        //Toast.makeText(v.getContext(), "Computer's new card is "+card2.getRank()+" of "+card2.getSuit(), Toast.LENGTH_SHORT).show();
+        cent.setText("current card's score is "+card2.getValue());
 
         if (card2.getValue() == 1 && compscore < 11) {
 
@@ -257,9 +270,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ans[0] = card2.getValue();
         }
 
-
-            }
-        }, 3000);
         return ans[0];
     }
 

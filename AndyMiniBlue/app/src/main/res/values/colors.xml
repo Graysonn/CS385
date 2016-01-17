@@ -7,4 +7,6 @@
     <color name="colorPlayerScore">#00FF00</color>
     <color name="colorBust">#ff0000</color>
     <color name="black">#000000</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>
