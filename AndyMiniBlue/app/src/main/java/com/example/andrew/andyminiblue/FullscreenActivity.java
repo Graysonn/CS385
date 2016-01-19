@@ -103,7 +103,7 @@ public class FullscreenActivity extends AppCompatActivity {
                     e.printStackTrace();
                     }
                     finally{
-                        Intent intent = new Intent("android.intent.action.INTROSCREEN");
+                        Intent intent = new Intent("android.intent.action.MAINACTIVITY");
                         startActivity(intent);
                     }
                 }

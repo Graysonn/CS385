@@ -33,6 +33,24 @@ public class deck {
         }
         return ans;
     }
+
+    public double probability(int score)
+    {
+        double yes=0;
+        double no=0;
+        for(int i=0;i<52;i++)
+        {
+            if(cards[i]==null)
+            {}
+            else if(score+cards[i].getValue()>21)
+            {
+                no++;
+            }
+            else
+                yes++;
+        }
+        return 100.00*(yes/no);
+    }
 }
 
 

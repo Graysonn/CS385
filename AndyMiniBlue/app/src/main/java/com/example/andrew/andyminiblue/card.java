@@ -59,54 +59,200 @@ public class card extends Drawable {
 
 
     public int getFace(){
-        return R.drawable.spades1;
-        /*switch (rank)
-        {
+        switch (suit) {
+            case 0:
+                switch (rank) {
+                    case 1:
+                        face = R.drawable.clubs1;
+                        break;
+                    case 2:
+                        face = R.drawable.clubs2;
+                        break;
+                    case 3:
+                        face = R.drawable.clubs3;
+                        break;
+                    case 4:
+                        face = R.drawable.clubs4;
+                        break;
+                    case 5:
+                        face = R.drawable.clubs5;
+                        break;
+                    case 6:
+                        face = R.drawable.clubs6;
+                        break;
+                    case 7:
+                        face = R.drawable.clubs7;
+                        break;
+                    case 8:
+                        face = R.drawable.clubs8;
+                        break;
+                    case 9:
+                        face = R.drawable.clubs9;
+                        break;
+                    case 10:
+                        face = R.drawable.clubs10;
+                        break;
+                    case 11:
+                        face = R.drawable.clubs11;
+                        break;
+                    case 12:
+                        face = R.drawable.clubs12;
+                        break;
+                    case 13:
+                        face = R.drawable.clubs13;
+                        break;
+                    default:
+                        face = R.drawable.redcardback;
+                        break;
+                }
+                break;
+
+
             case 1:
-                face=R.drawable.hearts1;
+                switch (rank) {
+                    case 1:
+                        face = R.drawable.spades1;
+                        break;
+                    case 2:
+                        face = R.drawable.spades2;
+                        break;
+                    case 3:
+                        face = R.drawable.spades3;
+                        break;
+                    case 4:
+                        face = R.drawable.spades4;
+                        break;
+                    case 5:
+                        face = R.drawable.spades5;
+                        break;
+                    case 6:
+                        face = R.drawable.spades6;
+                        break;
+                    case 7:
+                        face = R.drawable.spades7;
+                        break;
+                    case 8:
+                        face = R.drawable.spades8;
+                        break;
+                    case 9:
+                        face = R.drawable.spades9;
+                        break;
+                    case 10:
+                        face = R.drawable.spades10;
+                        break;
+                    case 11:
+                        face = R.drawable.spades11;
+                        break;
+                    case 12:
+                        face = R.drawable.spades12;
+                        break;
+                    case 13:
+                        face = R.drawable.spades13;
+                        break;
+                    default:
+                        face = R.drawable.redcardback;
+                        break;
+                }
                 break;
+
+
             case 2:
-                face=R.drawable.hearts2;
+                switch (rank) {
+                    case 1:
+                        face = R.drawable.hearts1;
+                        break;
+                    case 2:
+                        face = R.drawable.hearts2;
+                        break;
+                    case 3:
+                        face = R.drawable.hearts3;
+                        break;
+                    case 4:
+                        face = R.drawable.hearts4;
+                        break;
+                    case 5:
+                        face = R.drawable.hearts5;
+                        break;
+                    case 6:
+                        face = R.drawable.hearts6;
+                        break;
+                    case 7:
+                        face = R.drawable.hearts7;
+                        break;
+                    case 8:
+                        face = R.drawable.hearts8;
+                        break;
+                    case 9:
+                        face = R.drawable.hearts9;
+                        break;
+                    case 10:
+                        face = R.drawable.hearts10;
+                        break;
+                    case 11:
+                        face = R.drawable.hearts11;
+                        break;
+                    case 12:
+                        face = R.drawable.hearts12;
+                        break;
+                    case 13:
+                        face = R.drawable.hearts13;
+                        break;
+                    default:
+                        face = R.drawable.redcardback;
+                        break;
+                }
                 break;
+
             case 3:
-                face=R.drawable.hearts3;
+                switch (rank) {
+                    case 1:
+                        face = R.drawable.diamonds1;
+                        break;
+                    case 2:
+                        face = R.drawable.diamonds2;
+                        break;
+                    case 3:
+                        face = R.drawable.diamonds3;
+                        break;
+                    case 4:
+                        face = R.drawable.diamonds4;
+                        break;
+                    case 5:
+                        face = R.drawable.diamonds5;
+                        break;
+                    case 6:
+                        face = R.drawable.diamonds6;
+                        break;
+                    case 7:
+                        face = R.drawable.diamonds7;
+                        break;
+                    case 8:
+                        face = R.drawable.diamonds8;
+                        break;
+                    case 9:
+                        face = R.drawable.diamonds9;
+                        break;
+                    case 10:
+                        face = R.drawable.diamonds10;
+                        break;
+                    case 11:
+                        face = R.drawable.diamonds11;
+                        break;
+                    case 12:
+                        face = R.drawable.diamonds12;
+                        break;
+                    case 13:
+                        face = R.drawable.diamonds13;
+                        break;
+                    default:
+                        face = R.drawable.redcardback;
+                        break;
+                }
                 break;
-            case 4:
-                face=R.drawable.hearts4;
-                break;
-            case 5:
-                face=R.drawable.hearts5;
-                break;
-            case 6:
-                face=R.drawable.hearts6;
-                break;
-            case 7:
-                face=R.drawable.hearts7;
-                break;
-            case 8:
-                face=R.drawable.hearts8;
-                break;
-            case 9:
-                face=R.drawable.hearts9;
-                break;
-            case 10:
-                face=R.drawable.hearts10;
-                break;
-            case 11:
-                face=R.drawable.hearts11;
-                break;
-            case 12:
-                face=R.drawable.hearts12;
-                break;
-            case 13:
-                face=R.drawable.hearts13;
-                break;
-            default:
-                face=R.drawable.redcardback;
-                break;
+
         }
         return face;
-        */
+
     }
 
     @Override
