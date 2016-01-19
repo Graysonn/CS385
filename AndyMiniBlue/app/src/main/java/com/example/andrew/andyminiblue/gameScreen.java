@@ -27,6 +27,7 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
     public Button addCard;
     ImageView cardface;
     Animation ani1;
+    Animation ani2;
     Animation ani3;
     Animation ani4;
     Animation ani5;
@@ -66,6 +67,8 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
 
         ani1 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
         ani1.setAnimationListener(this);
+        ani2 = AnimationUtils.loadAnimation(this, R.anim.from_middle);
+        ani2.setAnimationListener(this);
         ani3 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
         ani3.setAnimationListener(this);
         ani4 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
@@ -108,210 +111,77 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.button:
                 String str1 = "You Win";
-                final TextView cent= (TextView) findViewById(R.id.textView2);
+                TextView cent= (TextView) findViewById(R.id.textView2);
                 double prob=deck1.probability(score);
 
+                while(compscore<16) {
 
-                Thread timer = new Thread() {
-                    public void run() {
-                        try {
-                            sleep(5000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        finally{
-                            card1 =deck1.getCard();
-                            cf.start();
+                    card1 = deck1.getCard();
+                    cf.start();
+
+                    switch (compcardcount){
+                        case 0:
                             findViewById(R.id.comCard1);
                             findViewById(R.id.comCard1).setVisibility(View.VISIBLE);
                             findViewById(R.id.comCard1).clearAnimation();
                             findViewById(R.id.comCard1).setAnimation(PCani1);
                             findViewById(R.id.comCard1).startAnimation(PCani1);
                             compcardcount++;
-                            cent.setText("current card's score is " + card1.getValue());
-
-                            if (card1.getValue() == 1 && compscore < 11) {
-                                compace++;
-                                compscore+=  11;
-                            } else if(card1.getValue()>10)
-                            {
-                                compscore+= 10;
-                            }
-                            else{
-                                compscore+= card1.getValue();
-                            }
-
-                            if (compscore > 21 & compace > 0) {
-                                compscore -= 10;
-                                compace--;
-                            }
-                            pcScore="Computer: "+compscore;
-                            compscr.setText(pcScore);
-                        }
-                    }
-                };
-                timer.start();
-
-                Thread timer2 = new Thread() {
-                    public void run() {
-                        try {
-                            sleep(5000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        finally{
-                            card1 =deck1.getCard();
-                            cf.start();
+                            break;
+                        case 1:
                             findViewById(R.id.compCard2);
                             findViewById(R.id.compCard2).setVisibility(View.VISIBLE);
                             findViewById(R.id.compCard2).clearAnimation();
                             findViewById(R.id.compCard2).setAnimation(PCani2);
                             findViewById(R.id.compCard2).startAnimation(PCani2);
                             compcardcount++;
-                            cent.setText("current card's score is " + card1.getValue());
-
-                            if (card1.getValue() == 1 && compscore < 11) {
-                                compace++;
-                                compscore+=  11;
-                            } else if(card1.getValue()>10)
-                            {
-                                compscore+= 10;
-                            }
-                            else{
-                                compscore+= card1.getValue();
-                            }
-
-                            if (compscore > 21 & compace > 0) {
-                                compscore -= 10;
-                                compace--;
-                            }
-                            pcScore="Computer: "+compscore;
-                            compscr.setText(pcScore);
-                        }
+                            break;
+                        case 2:
+                            findViewById(R.id.compCard3);
+                            findViewById(R.id.compCard3).setVisibility(View.VISIBLE);
+                            findViewById(R.id.compCard3).clearAnimation();
+                            findViewById(R.id.compCard3).setAnimation(PCani3);
+                            findViewById(R.id.compCard3).startAnimation(PCani3);
+                            compcardcount++;
+                            break;
+                        case 3:
+                            findViewById(R.id.compCard4);
+                            findViewById(R.id.compCard4).setVisibility(View.VISIBLE);
+                            findViewById(R.id.compCard4).clearAnimation();
+                            findViewById(R.id.compCard4).setAnimation(PCani4);
+                            findViewById(R.id.compCard4).startAnimation(PCani4);
+                            compcardcount++;
+                            break;
+                        case 4:
+                            findViewById(R.id.compCard5);
+                            findViewById(R.id.compCard5).setVisibility(View.VISIBLE);
+                            findViewById(R.id.compCard5).clearAnimation();
+                            findViewById(R.id.compCard5).setAnimation(PCani5);
+                            findViewById(R.id.compCard5).startAnimation(PCani5);
+                            compcardcount++;
+                            break;
                     }
-                };
-                timer2.start();
 
-                if(compscore<16) {
+                    cent.setText("current card's score is " + card1.getValue());
 
+                    if (card1.getValue() == 1 && compscore < 11) {
+                        compace++;
+                        compscore+=  11;
+                    } else if(card1.getValue()>10)
+                    {
+                        compscore+= 10;
+                    }
+                    else{
+                        compscore+= card1.getValue();
+                    }
 
-                    Thread timer3 = new Thread() {
-                        public void run() {
-                            try {
-                                sleep(5000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } finally {
-                                card1 = deck1.getCard();
-                                cf.start();
-                                findViewById(R.id.compCard3);
-                                findViewById(R.id.compCard3).setVisibility(View.VISIBLE);
-                                findViewById(R.id.compCard3).clearAnimation();
-                                findViewById(R.id.compCard3).setAnimation(PCani3);
-                                findViewById(R.id.compCard3).startAnimation(PCani3);
-                                compcardcount++;
-                                cent.setText("current card's score is " + card1.getValue());
-
-                                if (card1.getValue() == 1 && compscore < 11) {
-                                    compace++;
-                                    compscore += 11;
-                                } else if (card1.getValue() > 10) {
-                                    compscore += 10;
-                                } else {
-                                    compscore += card1.getValue();
-                                }
-
-                                if (compscore > 21 & compace > 0) {
-                                    compscore -= 10;
-                                    compace--;
-                                }
-                                pcScore = "Computer: " + compscore;
-                                compscr.setText(pcScore);
-                            }
-                        }
-                    };
-                    timer3.start();
+                    if (compscore > 21 & compace > 0) {
+                        compscore -= 10;
+                        compace--;
+                    }
+                    pcScore="Computer: "+compscore;
+                    compscr.setText(pcScore);
                 }
-
-                if(compscore<16) {
-                    Thread timer4 = new Thread() {
-                        public void run() {
-                            try {
-                                sleep(5000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } finally {
-                                card1 = deck1.getCard();
-                                cf.start();
-                                findViewById(R.id.compCard4);
-                                findViewById(R.id.compCard4).setVisibility(View.VISIBLE);
-                                findViewById(R.id.compCard4).clearAnimation();
-                                findViewById(R.id.compCard4).setAnimation(PCani4);
-                                findViewById(R.id.compCard4).startAnimation(PCani4);
-                                compcardcount++;
-                                cent.setText("current card's score is " + card1.getValue());
-
-                                if (card1.getValue() == 1 && compscore < 11) {
-                                    compace++;
-                                    compscore += 11;
-                                } else if (card1.getValue() > 10) {
-                                    compscore += 10;
-                                } else {
-                                    compscore += card1.getValue();
-                                }
-
-                                if (compscore > 21 & compace > 0) {
-                                    compscore -= 10;
-                                    compace--;
-                                }
-                                pcScore = "Computer: " + compscore;
-                                compscr.setText(pcScore);
-                            }
-                        }
-                    };
-                    timer4.start();
-                }
-
-                if(compscore<16) {
-                    Thread timer5 = new Thread() {
-                        public void run() {
-                            try {
-                                sleep(5000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } finally {
-                                card1 = deck1.getCard();
-                                cf.start();
-                                findViewById(R.id.compCard5);
-                                findViewById(R.id.compCard5).setVisibility(View.VISIBLE);
-                                findViewById(R.id.compCard5).clearAnimation();
-                                findViewById(R.id.compCard5).setAnimation(PCani5);
-                                findViewById(R.id.compCard5).startAnimation(PCani5);
-                                compcardcount++;
-                                cent.setText("current card's score is " + card1.getValue());
-
-                                if (card1.getValue() == 1 && compscore < 11) {
-                                    compace++;
-                                    compscore += 11;
-                                } else if (card1.getValue() > 10) {
-                                    compscore += 10;
-                                } else {
-                                    compscore += card1.getValue();
-                                }
-
-                                if (compscore > 21 & compace > 0) {
-                                    compscore -= 10;
-                                    compace--;
-                                }
-                                pcScore = "Computer: " + compscore;
-                                compscr.setText(pcScore);
-                            }
-                        }
-                    };
-                    timer5.start();
-                }
-
-
 
                 if((score>compscore && score<22) || (score<22 && compscore>21))
                 {
@@ -449,33 +319,53 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
         if (animation==ani1) {
             ((ImageView)findViewById(R.id.card)).setImageResource(card1.getFace());
             findViewById(R.id.card).clearAnimation();
+            findViewById(R.id.card).setAnimation(ani2);
+            findViewById(R.id.card).startAnimation(ani2);
         }else if (animation==ani3){
             ((ImageView)findViewById(R.id.card2)).setImageResource(card1.getFace());
             findViewById(R.id.card2).clearAnimation();
+            findViewById(R.id.card2).setAnimation(ani2);
+            findViewById(R.id.card2).startAnimation(ani2);
         }else if (animation==ani4) {
             ((ImageView)findViewById(R.id.card3)).setImageResource(card1.getFace());
             findViewById(R.id.card3).clearAnimation();
+            findViewById(R.id.card3).setAnimation(ani2);
+            findViewById(R.id.card3).startAnimation(ani2);
         } else if (animation==ani5) {
             ((ImageView)findViewById(R.id.card4)).setImageResource(card1.getFace());
            findViewById(R.id.card4).clearAnimation();
+            findViewById(R.id.card4).setAnimation(ani2);
+            findViewById(R.id.card4).startAnimation(ani2);
         } else if (animation==ani6) {
             ((ImageView)findViewById(R.id.card5)).setImageResource(card1.getFace());
             findViewById(R.id.card5).clearAnimation();
+            findViewById(R.id.card5).setAnimation(ani2);
+            findViewById(R.id.card5).startAnimation(ani2);
         }else if (animation==PCani1) {
             ((ImageView)findViewById(R.id.comCard1)).setImageResource(card1.getFace());
             findViewById(R.id.comCard1).clearAnimation();
+            findViewById(R.id.comCard1).setAnimation(ani2);
+            findViewById(R.id.comCard1).startAnimation(ani2);
         }else if (animation==PCani2) {
             ((ImageView)findViewById(R.id.compCard2)).setImageResource(card1.getFace());
             findViewById(R.id.compCard2).clearAnimation();
+            findViewById(R.id.compCard2).setAnimation(ani2);
+            findViewById(R.id.compCard2).startAnimation(ani2);
         }else if (animation==PCani3) {
             ((ImageView)findViewById(R.id.compCard3)).setImageResource(card1.getFace());
             findViewById(R.id.compCard3).clearAnimation();
+            findViewById(R.id.compCard3).setAnimation(ani2);
+            findViewById(R.id.compCard3).startAnimation(ani2);
         }else if (animation==PCani4) {
             ((ImageView)findViewById(R.id.compCard4)).setImageResource(card1.getFace());
             findViewById(R.id.compCard4).clearAnimation();
+            findViewById(R.id.compCard4).setAnimation(ani2);
+            findViewById(R.id.compCard4).startAnimation(ani2);
         }else if (animation==PCani5) {
             ((ImageView)findViewById(R.id.compCard5)).setImageResource(card1.getFace());
             findViewById(R.id.compCard5).clearAnimation();
+            findViewById(R.id.compCard5).setAnimation(ani2);
+            findViewById(R.id.compCard5).startAnimation(ani2);
         }
     }
 
