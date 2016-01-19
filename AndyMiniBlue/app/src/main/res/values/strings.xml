@@ -5,7 +5,7 @@
 
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">Mini\nBlue</string>
+    <string name="dummy_content">Mini   Blue \n\n by\n Andy Farnham\nand\nAndy Garrad</string>
 
     <string name="title_activity_card_game">CardGame</string>
 

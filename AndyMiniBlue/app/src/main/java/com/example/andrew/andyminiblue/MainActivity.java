@@ -1,6 +1,7 @@
 package com.example.andrew.andyminiblue;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +24,8 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, Animation.AnimationListener {
+
 
 
     int score=0;
@@ -29,10 +34,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int wincount=0;
     int losscount=0;
     String pcScore;
+    int cardcount=1;
     int ace=0;
     int compace=0;
     deck deck1 = new deck();
     public Button addCard;
+    ImageView cardface;
+    Animation ani1;
+    Animation ani2;
+    Animation ani3;
+    Animation ani4;
+    Animation ani5;
+    Animation ani6;
+    private card card1;
+
+    boolean isBackOfCardShowing =true;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -58,9 +75,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         TextView scr = (TextView) findViewById(R.id.Score);
 
+        cardface=(ImageView) findViewById(R.id.card);
+//        card.setImageResource(R.drawable.redcardback);
+
         TextView compscr = (TextView) findViewById(R.id.PCScore);
         scr.setText("Player:0");
         compscr.setText("Computer:0");
+
+        ani1 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        ani1.setAnimationListener(this);
+        ani2 = AnimationUtils.loadAnimation(this, R.anim.from_middle);
+        ani2.setAnimationListener(this);
+        ani3 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        ani3.setAnimationListener(this);
+        ani4 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        ani4.setAnimationListener(this);
+        ani5 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        ani5.setAnimationListener(this);
+        ani6 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        ani6.setAnimationListener(this);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +181,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView WinCount=(TextView) findViewById(R.id.WinCount);
         TextView LossCount=(TextView) findViewById(R.id.LossCount);
         final TextView cent= (TextView) findViewById(R.id.textView2);
+        cardface= (ImageView) findViewById(R.id.card);
+
+
+
 
 
 
@@ -159,21 +197,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 while(compscore<16) {
 
 
-                    Thread timer = new Thread() {
-                        public void run() {
-                            try {
-                                sleep(5000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            finally{
-                                compscore+=drawcard();
-                            }
-                        }
-                    };
-                    timer.start();
-
-
+                    compscore+=drawcard();
 
                     if (compscore > 21 & compace > 0) {
                         compscore -= 10;
@@ -196,9 +220,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.addCard:
-                card card1=deck1.getCard();
-                //Toast.makeText(v.getContext(), "Your new card is "+card1.getRank()+" of "+card1.getSuit(), Toast.LENGTH_SHORT).show();
-                cent.setText("current card's score is "+card1.getValue());
+                card1=deck1.getCard();
+
+                //cent.setText("current card's score is "+card1.getValue());
+
+                if(cardcount==0) {
+                    ((ImageView) findViewById(R.id.card)).clearAnimation();
+                    ((ImageView) findViewById(R.id.card)).setAnimation(ani1);
+                    ((ImageView) findViewById(R.id.card)).startAnimation(ani1);
+                    cardcount++;
+                } else if(cardcount==1) {
+                    ((ImageView) findViewById(R.id.card)).clearAnimation();
+                    ((ImageView) findViewById(R.id.card)).setAnimation(ani3);
+                    ((ImageView) findViewById(R.id.card)).startAnimation(ani3);
+                    cardcount++;
+                } else if(cardcount==2) {
+                    ((ImageView) findViewById(R.id.card)).clearAnimation();
+                    ((ImageView) findViewById(R.id.card)).setAnimation(ani4);
+                    ((ImageView) findViewById(R.id.card)).startAnimation(ani4);
+                    cardcount++;
+                } else if(cardcount==3) {
+                    ((ImageView) findViewById(R.id.card)).clearAnimation();
+                    ((ImageView) findViewById(R.id.card)).setAnimation(ani5);
+                    ((ImageView) findViewById(R.id.card)).startAnimation(ani5);
+                    cardcount++;
+                }
+
 
                 if (card1.getValue()==1 && score<11)
                 {
@@ -244,33 +291,99 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         compscr.setText("Computer: 0");
         deck1 = new deck();
         addCard.setEnabled(true);
+        cardcount=1;
+        ((ImageView)findViewById(R.id.card)).setImageResource(R.drawable.redcardback);
+        ((ImageView)findViewById(R.id.card2)).setImageResource(R.drawable.redcardback);
+        ((ImageView)findViewById(R.id.card3)).setImageResource(R.drawable.redcardback);
+        ((ImageView)findViewById(R.id.card4)).setImageResource(R.drawable.redcardback);
+        ((ImageView)findViewById(R.id.card5)).setImageResource(R.drawable.redcardback);
     }
     public int drawcard()
     {
-        final int[] ans = new int[1];
-        final TextView cent= (TextView) findViewById(R.id.textView2);
-        final card card2 = deck1.getCard();
+        TextView cent= (TextView) findViewById(R.id.textView2);
+        card1 = deck1.getCard();
 
-
-
+        ((ImageView)findViewById(R.id.card)).clearAnimation();
+        ((ImageView)findViewById(R.id.card)).setAnimation(ani1);
+        ((ImageView)findViewById(R.id.card)).startAnimation(ani1);
 
 
         //Toast.makeText(v.getContext(), "Computer's new card is "+card2.getRank()+" of "+card2.getSuit(), Toast.LENGTH_SHORT).show();
-        cent.setText("current card's score is "+card2.getValue());
+        cent.setText("current card's score is " + card1.getValue());
 
-        if (card2.getValue() == 1 && compscore < 11) {
+        if (card1.getValue() == 1 && compscore < 11) {
 
             compace++;
-            ans[0] = 11;
-        } else if(card2.getValue()>10)
+            return  11;
+        } else if(card1.getValue()>10)
         {
-            ans[0] =10;
+            return 10;
         }
         else{
-            ans[0] = card2.getValue();
+            return card1.getValue();
         }
 
-        return ans[0];
     }
 
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        if (animation==ani1) {
+            if (isBackOfCardShowing) {
+                ((ImageView)findViewById(R.id.card)).setImageResource(card1.getFace());
+            } else {
+                ((ImageView)findViewById(R.id.card)).setImageResource(R.drawable.redcardback);
+            }
+            ((ImageView)findViewById(R.id.card)).clearAnimation();
+            ((ImageView)findViewById(R.id.card)).setAnimation(ani2);
+            ((ImageView)findViewById(R.id.card)).startAnimation(ani2);
+        } else if (animation==ani3) {
+            if (isBackOfCardShowing) {
+                ((ImageView)findViewById(R.id.card2)).setImageResource(card1.getFace());
+            } else {
+                ((ImageView)findViewById(R.id.card2)).setImageResource(R.drawable.redcardback);
+            }
+            ((ImageView)findViewById(R.id.card2)).clearAnimation();
+            ((ImageView)findViewById(R.id.card2)).setAnimation(ani2);
+            ((ImageView)findViewById(R.id.card2)).startAnimation(ani2);
+        } else if (animation==ani4) {
+            if (isBackOfCardShowing) {
+                ((ImageView)findViewById(R.id.card3)).setImageResource(card1.getFace());
+            } else {
+                ((ImageView)findViewById(R.id.card3)).setImageResource(R.drawable.redcardback);
+            }
+            ((ImageView)findViewById(R.id.card3)).clearAnimation();
+            ((ImageView)findViewById(R.id.card3)).setAnimation(ani2);
+            ((ImageView)findViewById(R.id.card3)).startAnimation(ani2);
+        } else if (animation==ani5) {
+            if (isBackOfCardShowing) {
+                ((ImageView)findViewById(R.id.card4)).setImageResource(card1.getFace());
+            } else {
+                ((ImageView)findViewById(R.id.card4)).setImageResource(R.drawable.redcardback);
+            }
+            ((ImageView)findViewById(R.id.card4)).clearAnimation();
+            ((ImageView)findViewById(R.id.card4)).setAnimation(ani2);
+            ((ImageView)findViewById(R.id.card4)).startAnimation(ani2);
+        } else if (animation==ani6) {
+            if (isBackOfCardShowing) {
+                ((ImageView)findViewById(R.id.card5)).setImageResource(card1.getFace());
+            } else {
+                ((ImageView)findViewById(R.id.card5)).setImageResource(R.drawable.redcardback);
+            }
+            ((ImageView)findViewById(R.id.card5)).clearAnimation();
+            ((ImageView)findViewById(R.id.card5)).setAnimation(ani2);
+            ((ImageView)findViewById(R.id.card5)).startAnimation(ani2);
+        }else {
+            isBackOfCardShowing=true;
+        }
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
+    }
 }
