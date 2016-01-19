@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else {
                     Toast.makeText(v.getContext(), "You Lose", Toast.LENGTH_SHORT).show();
                     losscount++;
-                    LossCount.setText("No. of Loss': "+losscount);
+                    LossCount.setText("No. of Losses: "+losscount);
                 }
                 break;
 
@@ -171,31 +171,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 card1=deck1.getCard();
 
                 if(cardcount==0) {
-                    ((ImageView) findViewById(R.id.card)).setVisibility(findViewById(R.id.card).VISIBLE);
+                    findViewById(R.id.card);
+                    ((ImageView) findViewById(R.id.card)).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.card)).clearAnimation();
                     ((ImageView) findViewById(R.id.card)).setAnimation(ani1);
                     ((ImageView) findViewById(R.id.card)).startAnimation(ani1);
                     cardcount++;
                 } else if(cardcount==1) {
-                    ((ImageView) findViewById(R.id.card2)).setVisibility(findViewById(R.id.card2).VISIBLE);
+                    findViewById(R.id.card2);
+                    ((ImageView) findViewById(R.id.card2)).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.card2)).clearAnimation();
                     ((ImageView) findViewById(R.id.card2)).setAnimation(ani3);
                     ((ImageView) findViewById(R.id.card2)).startAnimation(ani3);
                     cardcount++;
                 } else if(cardcount==2) {
-                    ((ImageView) findViewById(R.id.card3)).setVisibility(findViewById(R.id.card3).VISIBLE);
+                    findViewById(R.id.card3);
+                    ((ImageView) findViewById(R.id.card3)).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.card3)).clearAnimation();
                     ((ImageView) findViewById(R.id.card3)).setAnimation(ani4);
                     ((ImageView) findViewById(R.id.card3)).startAnimation(ani4);
                     cardcount++;
                 } else if(cardcount==3) {
-                    ((ImageView) findViewById(R.id.card4)).setVisibility(findViewById(R.id.card4).VISIBLE);
+                    findViewById(R.id.card4);
+                    ((ImageView) findViewById(R.id.card4)).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.card4)).clearAnimation();
                     ((ImageView) findViewById(R.id.card4)).setAnimation(ani5);
                     ((ImageView) findViewById(R.id.card4)).startAnimation(ani5);
                     cardcount++;
                 }else if(cardcount==4) {
-                    ((ImageView) findViewById(R.id.card5)).setVisibility(findViewById(R.id.card4).VISIBLE);
+                    findViewById(R.id.card5);
+                    ((ImageView) findViewById(R.id.card5)).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.card5)).clearAnimation();
                     ((ImageView) findViewById(R.id.card5)).setAnimation(ani6);
                     ((ImageView) findViewById(R.id.card5)).startAnimation(ani6);
@@ -254,6 +259,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ((ImageView)findViewById(R.id.card3)).setImageResource(R.drawable.redcardback);
         ((ImageView)findViewById(R.id.card4)).setImageResource(R.drawable.redcardback);
         ((ImageView)findViewById(R.id.card5)).setImageResource(R.drawable.redcardback);
+        ((ImageView)findViewById(R.id.comCard1)).setImageResource(R.drawable.redcardback);
+        ((ImageView)findViewById(R.id.compCard2)).setImageResource(R.drawable.redcardback);
+        ((ImageView)findViewById(R.id.compCard3)).setImageResource(R.drawable.redcardback);
+        ((ImageView)findViewById(R.id.compCard4)).setImageResource(R.drawable.redcardback);
+        ((ImageView)findViewById(R.id.compCard5)).setImageResource(R.drawable.redcardback);
     }
     public int drawcard()
     {

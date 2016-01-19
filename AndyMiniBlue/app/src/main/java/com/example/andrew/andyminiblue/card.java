@@ -59,7 +59,8 @@ public class card extends Drawable {
 
 
     public int getFace(){
-        switch (rank)
+        return R.drawable.spades1;
+        /*switch (rank)
         {
             case 1:
                 face=R.drawable.hearts1;
@@ -105,6 +106,7 @@ public class card extends Drawable {
                 break;
         }
         return face;
+        */
     }
 
     @Override
