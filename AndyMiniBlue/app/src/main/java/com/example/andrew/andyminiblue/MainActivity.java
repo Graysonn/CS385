@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int wincount=0;
     int losscount=0;
     String pcScore;
-    int cardcount=1;
+    int cardcount=0;
+    int compcardcount=0;
     int ace=0;
     int compace=0;
     deck deck1 = new deck();
@@ -46,6 +47,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Animation ani4;
     Animation ani5;
     Animation ani6;
+    Animation PCani1;
+    Animation PCani2;
+    Animation PCani3;
+    Animation PCani4;
+    Animation PCani5;
     private card card1;
 
     boolean isBackOfCardShowing =true;
@@ -94,87 +100,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ani5.setAnimationListener(this);
         ani6 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
         ani6.setAnimationListener(this);
+        PCani1 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        PCani1.setAnimationListener(this);
+        PCani2 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        PCani2.setAnimationListener(this);
+        PCani3 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        PCani3.setAnimationListener(this);
+        PCani4 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        PCani4.setAnimationListener(this);
+        PCani5 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        PCani5.setAnimationListener(this);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.example.andrew.andyminiblue/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.example.andrew.andyminiblue/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
     }
 
     @Override
     public void onClick(final View v) {
-
-
 
         TextView scr=(TextView) findViewById(R.id.Score);
         final TextView compscr=(TextView) findViewById(R.id.PCScore);
@@ -182,13 +137,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView LossCount=(TextView) findViewById(R.id.LossCount);
         final TextView cent= (TextView) findViewById(R.id.textView2);
         cardface= (ImageView) findViewById(R.id.card);
-
-
-
-
-
-
-
 
         switch (v.getId()) {
             case R.id.button:
@@ -222,27 +170,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.addCard:
                 card1=deck1.getCard();
 
-                //cent.setText("current card's score is "+card1.getValue());
-
                 if(cardcount==0) {
+                    ((ImageView) findViewById(R.id.card)).setVisibility(findViewById(R.id.card).VISIBLE);
                     ((ImageView) findViewById(R.id.card)).clearAnimation();
                     ((ImageView) findViewById(R.id.card)).setAnimation(ani1);
                     ((ImageView) findViewById(R.id.card)).startAnimation(ani1);
                     cardcount++;
                 } else if(cardcount==1) {
-                    ((ImageView) findViewById(R.id.card)).clearAnimation();
-                    ((ImageView) findViewById(R.id.card)).setAnimation(ani3);
-                    ((ImageView) findViewById(R.id.card)).startAnimation(ani3);
+                    ((ImageView) findViewById(R.id.card2)).setVisibility(findViewById(R.id.card2).VISIBLE);
+                    ((ImageView) findViewById(R.id.card2)).clearAnimation();
+                    ((ImageView) findViewById(R.id.card2)).setAnimation(ani3);
+                    ((ImageView) findViewById(R.id.card2)).startAnimation(ani3);
                     cardcount++;
                 } else if(cardcount==2) {
-                    ((ImageView) findViewById(R.id.card)).clearAnimation();
-                    ((ImageView) findViewById(R.id.card)).setAnimation(ani4);
-                    ((ImageView) findViewById(R.id.card)).startAnimation(ani4);
+                    ((ImageView) findViewById(R.id.card3)).setVisibility(findViewById(R.id.card3).VISIBLE);
+                    ((ImageView) findViewById(R.id.card3)).clearAnimation();
+                    ((ImageView) findViewById(R.id.card3)).setAnimation(ani4);
+                    ((ImageView) findViewById(R.id.card3)).startAnimation(ani4);
                     cardcount++;
                 } else if(cardcount==3) {
-                    ((ImageView) findViewById(R.id.card)).clearAnimation();
-                    ((ImageView) findViewById(R.id.card)).setAnimation(ani5);
-                    ((ImageView) findViewById(R.id.card)).startAnimation(ani5);
+                    ((ImageView) findViewById(R.id.card4)).setVisibility(findViewById(R.id.card4).VISIBLE);
+                    ((ImageView) findViewById(R.id.card4)).clearAnimation();
+                    ((ImageView) findViewById(R.id.card4)).setAnimation(ani5);
+                    ((ImageView) findViewById(R.id.card4)).startAnimation(ani5);
+                    cardcount++;
+                }else if(cardcount==4) {
+                    ((ImageView) findViewById(R.id.card5)).setVisibility(findViewById(R.id.card4).VISIBLE);
+                    ((ImageView) findViewById(R.id.card5)).clearAnimation();
+                    ((ImageView) findViewById(R.id.card5)).setAnimation(ani6);
+                    ((ImageView) findViewById(R.id.card5)).startAnimation(ani6);
                     cardcount++;
                 }
 
@@ -291,7 +247,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         compscr.setText("Computer: 0");
         deck1 = new deck();
         addCard.setEnabled(true);
-        cardcount=1;
+        cardcount=0;
+        compcardcount=0;
         ((ImageView)findViewById(R.id.card)).setImageResource(R.drawable.redcardback);
         ((ImageView)findViewById(R.id.card2)).setImageResource(R.drawable.redcardback);
         ((ImageView)findViewById(R.id.card3)).setImageResource(R.drawable.redcardback);
@@ -303,9 +260,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView cent= (TextView) findViewById(R.id.textView2);
         card1 = deck1.getCard();
 
-        ((ImageView)findViewById(R.id.card)).clearAnimation();
-        ((ImageView)findViewById(R.id.card)).setAnimation(ani1);
-        ((ImageView)findViewById(R.id.card)).startAnimation(ani1);
+        if(compcardcount==0) {
+            ((ImageView) findViewById(R.id.comCard1)).setVisibility(findViewById(R.id.comCard1).VISIBLE);
+            ((ImageView) findViewById(R.id.comCard1)).clearAnimation();
+            ((ImageView) findViewById(R.id.comCard1)).setAnimation(PCani1);
+            ((ImageView) findViewById(R.id.comCard1)).startAnimation(PCani1);
+            compcardcount++;
+        } else if(compcardcount==1) {
+            findViewById(R.id.compCard2);
+            ((ImageView) findViewById(R.id.compCard2)).setVisibility(View.VISIBLE);
+            ((ImageView) findViewById(R.id.compCard2)).clearAnimation();
+            ((ImageView) findViewById(R.id.compCard2)).setAnimation(PCani2);
+            ((ImageView) findViewById(R.id.compCard2)).startAnimation(PCani2);
+            compcardcount++;
+        } else if(compcardcount==2) {
+            ((ImageView) findViewById(R.id.compCard3)).setVisibility(findViewById(R.id.compCard3).VISIBLE);
+            ((ImageView) findViewById(R.id.compCard3)).clearAnimation();
+            ((ImageView) findViewById(R.id.compCard3)).setAnimation(PCani3);
+            ((ImageView) findViewById(R.id.compCard3)).startAnimation(PCani3);
+            compcardcount++;
+        } else if(compcardcount==3) {
+            ((ImageView) findViewById(R.id.compCard4)).setVisibility(findViewById(R.id.compCard4).VISIBLE);
+            ((ImageView) findViewById(R.id.compCard4)).clearAnimation();
+            ((ImageView) findViewById(R.id.compCard4)).setAnimation(PCani4);
+            ((ImageView) findViewById(R.id.compCard4)).startAnimation(PCani4);
+            compcardcount++;
+        }else if(compcardcount==4) {
+            ((ImageView) findViewById(R.id.compCard5)).setVisibility(findViewById(R.id.compCard5).VISIBLE);
+            ((ImageView) findViewById(R.id.compCard5)).clearAnimation();
+            ((ImageView) findViewById(R.id.compCard5)).setAnimation(PCani5);
+            ((ImageView) findViewById(R.id.compCard5)).startAnimation(PCani5);
+            compcardcount++;
+        }
 
 
         //Toast.makeText(v.getContext(), "Computer's new card is "+card2.getRank()+" of "+card2.getSuit(), Toast.LENGTH_SHORT).show();
@@ -377,6 +363,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ((ImageView)findViewById(R.id.card5)).clearAnimation();
             ((ImageView)findViewById(R.id.card5)).setAnimation(ani2);
             ((ImageView)findViewById(R.id.card5)).startAnimation(ani2);
+        }else if (animation==PCani1) {
+            if (isBackOfCardShowing) {
+                ((ImageView)findViewById(R.id.comCard1)).setImageResource(card1.getFace());
+            } else {
+                ((ImageView)findViewById(R.id.comCard1)).setImageResource(R.drawable.redcardback);
+            }
+            ((ImageView)findViewById(R.id.comCard1)).clearAnimation();
+            ((ImageView)findViewById(R.id.comCard1)).setAnimation(ani2);
+            ((ImageView)findViewById(R.id.comCard1)).startAnimation(ani2);
+        }else if (animation==PCani2) {
+            if (isBackOfCardShowing) {
+                ((ImageView)findViewById(R.id.compCard2)).setImageResource(card1.getFace());
+            } else {
+                ((ImageView)findViewById(R.id.compCard2)).setImageResource(R.drawable.redcardback);
+            }
+            ((ImageView)findViewById(R.id.compCard2)).clearAnimation();
+            ((ImageView)findViewById(R.id.compCard2)).setAnimation(ani2);
+            ((ImageView)findViewById(R.id.compCard2)).startAnimation(ani2);
+        }else if (animation==PCani3) {
+            if (isBackOfCardShowing) {
+                ((ImageView)findViewById(R.id.compCard3)).setImageResource(card1.getFace());
+            } else {
+                ((ImageView)findViewById(R.id.compCard3)).setImageResource(R.drawable.redcardback);
+            }
+            ((ImageView)findViewById(R.id.compCard3)).clearAnimation();
+            ((ImageView)findViewById(R.id.compCard3)).setAnimation(ani2);
+            ((ImageView)findViewById(R.id.compCard3)).startAnimation(ani2);
+        }else if (animation==PCani4) {
+            if (isBackOfCardShowing) {
+                ((ImageView)findViewById(R.id.compCard4)).setImageResource(card1.getFace());
+            } else {
+                ((ImageView)findViewById(R.id.compCard4)).setImageResource(R.drawable.redcardback);
+            }
+            ((ImageView)findViewById(R.id.compCard4)).clearAnimation();
+            ((ImageView)findViewById(R.id.compCard4)).setAnimation(ani2);
+            ((ImageView)findViewById(R.id.compCard4)).startAnimation(ani2);
+        }else if (animation==PCani5) {
+            if (isBackOfCardShowing) {
+                ((ImageView)findViewById(R.id.compCard5)).setImageResource(card1.getFace());
+            } else {
+                ((ImageView)findViewById(R.id.compCard5)).setImageResource(R.drawable.redcardback);
+            }
+            ((ImageView)findViewById(R.id.compCard5)).clearAnimation();
+            ((ImageView)findViewById(R.id.compCard5)).setAnimation(ani2);
+            ((ImageView)findViewById(R.id.compCard5)).startAnimation(ani2);
         }else {
             isBackOfCardShowing=true;
         }

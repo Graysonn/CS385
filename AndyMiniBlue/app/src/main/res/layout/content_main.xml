@@ -44,10 +44,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Score"
         android:id="@+id/Score"
-        android:textSize="50dp"
+        android:textSize="20dp"
+        style="@style/Playerscore"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        style="@style/Playerscore"/>
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="ComputerScore"
         android:id="@+id/PCScore"
-        android:textSize="50dp"
+        android:textSize="20dp"
         android:layout_below="@+id/Score"
         android:layout_centerHorizontal="true"
         style="@style/PCscore" />
@@ -85,59 +85,109 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="No. of Loss&apos;: 0"
+        android:text="No. of Losses: 0"
         android:id="@+id/LossCount"
         style="@style/Info"
-        android:layout_below="@+id/WinCount"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="41dp" />
+        android:layout_alignTop="@+id/WinCount"
+        android:layout_toEndOf="@+id/PCScore" />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
         android:id="@+id/card"
-        android:layout_above="@+id/textView2"
-        android:layout_below="@+id/LossCount"
-        android:layout_alignEnd="@+id/textView2"
         android:contentDescription="@drawable/redcardback"
-        android:layout_alignStart="@+id/textView2"
-        android:visibility="visible"/>
+        android:visibility="invisible"
+        android:layout_alignBottom="@+id/card2"
+        android:src="@drawable/redcardback"
+        android:layout_toStartOf="@+id/card2" />
 
     <ImageView
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="80dp"
         android:id="@+id/card2"
-        android:layout_above="@+id/textView2"
-        android:layout_alignParentStart="true"
         android:contentDescription="playercard2"
-        android:src="@drawable/redcardback"/>
+        android:src="@drawable/redcardback"
+        android:layout_alignTop="@+id/card3"
+        android:layout_toStartOf="@+id/card3"
+        android:visibility="invisible" />
 
     <ImageView
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="80dp"
         android:id="@+id/card3"
         android:contentDescription="playercard3"
         android:src="@drawable/redcardback"
-        android:layout_alignTop="@+id/card2"
-        android:layout_toEndOf="@+id/card2" />
+        android:layout_above="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
 
     <ImageView
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="80dp"
         android:id="@+id/card4"
         android:contentDescription="playercard4"
         android:src="@drawable/redcardback"
         android:layout_alignTop="@+id/card3"
-        android:layout_toEndOf="@+id/card3" />
+        android:layout_toEndOf="@+id/card3"
+        android:visibility="invisible" />
 
     <ImageView
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="80dp"
         android:id="@+id/card5"
         android:contentDescription="playercard4"
         android:src="@drawable/redcardback"
-        android:layout_above="@+id/textView2"
+        android:layout_alignTop="@+id/card4"
         android:layout_toEndOf="@+id/card4" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:id="@+id/comCard1"
+        android:contentDescription="compcard1"
+        android:src="@drawable/redcardback"
+        android:layout_below="@+id/PCScore"
+        android:layout_toStartOf="@+id/compCard2"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:id="@+id/compCard2"
+        android:contentDescription="compcard2"
+        android:src="@drawable/redcardback"
+        android:layout_alignTop="@+id/comCard1"
+        android:layout_toStartOf="@+id/compCard3"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:id="@+id/compCard3"
+        android:contentDescription="compcard3"
+        android:src="@drawable/redcardback"
+        android:layout_alignTop="@+id/compCard2"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:id="@+id/compCard4"
+        android:contentDescription="compcard4"
+        android:src="@drawable/redcardback"
+        android:layout_alignBottom="@+id/compCard3"
+        android:layout_toEndOf="@+id/compCard3"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:id="@+id/compCard5"
+        android:contentDescription="compcard5"
+        android:src="@drawable/redcardback"
+        android:layout_alignBottom="@+id/compCard4"
+        android:layout_toEndOf="@+id/compCard4" />
 
 
 </RelativeLayout>
