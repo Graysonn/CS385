@@ -136,7 +136,8 @@
         android:contentDescription="playercard4"
         android:src="@drawable/redcardback"
         android:layout_alignTop="@+id/card4"
-        android:layout_toEndOf="@+id/card4" />
+        android:layout_toEndOf="@+id/card4"
+        android:visibility="invisible" />
 
     <ImageView
         android:layout_width="60dp"
@@ -185,7 +186,8 @@
         android:contentDescription="compcard5"
         android:src="@drawable/redcardback"
         android:layout_alignBottom="@+id/compCard4"
-        android:layout_toEndOf="@+id/compCard4" />
+        android:layout_toEndOf="@+id/compCard4"
+        android:visibility="invisible" />
 
 
 </RelativeLayout>
