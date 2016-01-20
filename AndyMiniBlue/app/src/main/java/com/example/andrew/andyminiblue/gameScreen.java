@@ -1,7 +1,9 @@
 package com.example.andrew.andyminiblue;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -25,6 +27,7 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
     int compace=0;
     deck deck1 = new deck();
     public Button addCard;
+    public Button Stick;
     ImageView cardface;
     Animation ani1;
     Animation ani2;
@@ -40,22 +43,24 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
     private card card1;
     MediaPlayer mp;
     MediaPlayer cf;
+    //SQLiteDatabase miniBlueData = SQLiteDatabase.openDatabase("MiniBlueDatabase",null,CREATE_IF_NECESSARY);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button;
+
         Button reset;
         addCard=(Button) findViewById(R.id.addCard);
         addCard.setOnClickListener(this);
-        button=(Button) findViewById(R.id.button);
-        button.setOnClickListener(this);
+        Stick=(Button) findViewById(R.id.button);
+        Stick.setOnClickListener(this);
         reset=(Button) findViewById(R.id.reset);
         reset.setOnClickListener(this);
         mp = MediaPlayer.create(getApplicationContext(), R.raw.winnerwinnercut);
         cf = MediaPlayer.create(getApplicationContext(), R.raw.cardflip);
+        //miniBlueData.execSQL("CREATE TABLE IF NOT EXISTS Results(time TIMESTAMP,Win INTEGER,Loss Integer);");
 
         TextView scr = (TextView) findViewById(R.id.Score);
 
@@ -104,104 +109,105 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
 
         TextView scr=(TextView) findViewById(R.id.Score);
         final TextView compscr=(TextView) findViewById(R.id.PCScore);
-        TextView WinCount=(TextView) findViewById(R.id.WinCount);
-        TextView LossCount=(TextView) findViewById(R.id.LossCount);
         cardface= (ImageView) findViewById(R.id.card);
+        TextView cent= (TextView) findViewById(R.id.textView2);
 
         switch (v.getId()) {
             case R.id.button:
-                String str1 = "You Win";
-                TextView cent= (TextView) findViewById(R.id.textView2);
-                double prob=deck1.probability(score);
 
-                while(compscore<16) {
+                double prob;//=deck1.probability(score);
+                Handler mytimer=new Handler();
 
-                    card1 = deck1.getCard();
-                    cf.start();
 
-                    switch (compcardcount){
-                        case 0:
-                            findViewById(R.id.comCard1);
-                            findViewById(R.id.comCard1).setVisibility(View.VISIBLE);
-                            findViewById(R.id.comCard1).clearAnimation();
-                            findViewById(R.id.comCard1).setAnimation(PCani1);
-                            findViewById(R.id.comCard1).startAnimation(PCani1);
-                            compcardcount++;
-                            break;
-                        case 1:
-                            findViewById(R.id.compCard2);
-                            findViewById(R.id.compCard2).setVisibility(View.VISIBLE);
-                            findViewById(R.id.compCard2).clearAnimation();
-                            findViewById(R.id.compCard2).setAnimation(PCani2);
-                            findViewById(R.id.compCard2).startAnimation(PCani2);
-                            compcardcount++;
-                            break;
-                        case 2:
-                            findViewById(R.id.compCard3);
-                            findViewById(R.id.compCard3).setVisibility(View.VISIBLE);
-                            findViewById(R.id.compCard3).clearAnimation();
-                            findViewById(R.id.compCard3).setAnimation(PCani3);
-                            findViewById(R.id.compCard3).startAnimation(PCani3);
-                            compcardcount++;
-                            break;
-                        case 3:
-                            findViewById(R.id.compCard4);
-                            findViewById(R.id.compCard4).setVisibility(View.VISIBLE);
-                            findViewById(R.id.compCard4).clearAnimation();
-                            findViewById(R.id.compCard4).setAnimation(PCani4);
-                            findViewById(R.id.compCard4).startAnimation(PCani4);
-                            compcardcount++;
-                            break;
-                        case 4:
-                            findViewById(R.id.compCard5);
-                            findViewById(R.id.compCard5).setVisibility(View.VISIBLE);
-                            findViewById(R.id.compCard5).clearAnimation();
-                            findViewById(R.id.compCard5).setAnimation(PCani5);
-                            findViewById(R.id.compCard5).startAnimation(PCani5);
-                            compcardcount++;
-                            break;
-                    }
 
-                    cent.setText("current card's score is " + card1.getValue());
-
-                    if (card1.getValue() == 1 && compscore < 11) {
-                        compace++;
-                        compscore+=  11;
-                    } else if(card1.getValue()>10)
-                    {
-                        compscore+= 10;
-                    }
-                    else{
-                        compscore+= card1.getValue();
-                    }
-
-                    if (compscore > 21 & compace > 0) {
-                        compscore -= 10;
-                        compace--;
-                    }
-                    pcScore="Computer: "+compscore;
-                    compscr.setText(pcScore);
+                card1 = deck1.getCard();
+                cf.start();
+                switch (compcardcount){
+                    case 0:
+                        findViewById(R.id.comCard1);
+                        findViewById(R.id.comCard1).setVisibility(View.VISIBLE);
+                        findViewById(R.id.comCard1).clearAnimation();
+                        findViewById(R.id.comCard1).setAnimation(PCani1);
+                        findViewById(R.id.comCard1).startAnimation(PCani1);
+                        compcardcount++;
+                        break;
+                    case 1:
+                        findViewById(R.id.compCard2);
+                        findViewById(R.id.compCard2).setVisibility(View.VISIBLE);
+                        findViewById(R.id.compCard2).clearAnimation();
+                        findViewById(R.id.compCard2).setAnimation(PCani2);
+                        findViewById(R.id.compCard2).startAnimation(PCani2);
+                        compcardcount++;
+                        break;
+                    case 2:
+                        findViewById(R.id.compCard3);
+                        findViewById(R.id.compCard3).setVisibility(View.VISIBLE);
+                        findViewById(R.id.compCard3).clearAnimation();
+                        findViewById(R.id.compCard3).setAnimation(PCani3);
+                        findViewById(R.id.compCard3).startAnimation(PCani3);
+                        compcardcount++;
+                        break;
+                    case 3:
+                        findViewById(R.id.compCard4);
+                        findViewById(R.id.compCard4).setVisibility(View.VISIBLE);
+                        findViewById(R.id.compCard4).clearAnimation();
+                        findViewById(R.id.compCard4).setAnimation(PCani4);
+                        findViewById(R.id.compCard4).startAnimation(PCani4);
+                        compcardcount++;
+                        break;
+                    case 4:
+                        findViewById(R.id.compCard5);
+                        findViewById(R.id.compCard5).setVisibility(View.VISIBLE);
+                        findViewById(R.id.compCard5).clearAnimation();
+                        findViewById(R.id.compCard5).setAnimation(PCani5);
+                        findViewById(R.id.compCard5).startAnimation(PCani5);
+                        compcardcount=0;
+                        break;
                 }
 
-                if((score>compscore && score<22) || (score<22 && compscore>21))
+
+                if (card1.getValue() == 1 && compscore < 11) {
+                    compace++;
+                    compscore+=  11;
+                } else if(card1.getValue()>10)
                 {
-                    mp.start();
-                    Toast.makeText(v.getContext(), str1, Toast.LENGTH_SHORT).show();
-                    wincount++;
-                    WinCount.setText("No. of Wins: "+wincount);
+                    compscore+= 10;
+                }
+                else{
+                    compscore+= card1.getValue();
+                }
+
+                if (compscore > 21 & compace > 0) {
+                    compscore -= 10;
+                    compace--;
+                }
+                pcScore="Computer: "+compscore;
+                compscr.setText(pcScore);
+                if(compscore<16){
+                    mytimer.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Stick.performClick();
+                        }
+                    }, 1000);
                 }
                 else {
-                    Toast.makeText(v.getContext(), "You Lose", Toast.LENGTH_SHORT).show();
-                    losscount++;
-                    LossCount.setText("No. of Losses: "+losscount);
+                    endgame(v);
                 }
-
-                cent.setText( String.format("Probabilty of next card not going bust:  %.2f", prob));
                 break;
 
             case R.id.addCard:
+                prob = deck1.probability(score);
                 card1=deck1.getCard();
                 cf.start();
+
+                addCard.setEnabled(false);
+                addCard.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        addCard.setEnabled(true);
+                    }
+                }, 500);
 
                 if(cardcount==0) {
                     findViewById(R.id.card);
@@ -237,7 +243,7 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
                     findViewById(R.id.card5).clearAnimation();
                     findViewById(R.id.card5).setAnimation(ani6);
                     findViewById(R.id.card5).startAnimation(ani6);
-                    cardcount++;
+                    cardcount=0;
                 }
 
 
@@ -264,8 +270,18 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
                 scr.setText(userScore);
                 if(score>21) {
                     Toast.makeText(v.getContext(), "BUST", Toast.LENGTH_LONG).show();
+                    cent.setText(String.format("Probability of your last card not going bust:  %.2f", prob));
                     addCard.setEnabled(false);
+                    Handler mybusttimer= new Handler();
+                    mybusttimer.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Stick.performClick();
+                        }
+                    }, 1000);
                 }
+
+
                 break;
             case R.id.reset:
                 reset();
@@ -275,12 +291,64 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    public void endgame(View v)
+    {
+
+        double prob=deck1.probability(score);
+
+        TextView cent= (TextView) findViewById(R.id.textView2);
+        TextView WinCount=(TextView) findViewById(R.id.WinCount);
+        TextView LossCount=(TextView) findViewById(R.id.LossCount);
+        String str1 = "You Win";
+
+        if((score>compscore && score<22) || (score<22 && compscore>21))
+        {
+            mp.start();
+            Toast.makeText(v.getContext(), str1, Toast.LENGTH_SHORT).show();
+            wincount++;
+            WinCount.setText("No. of Wins: "+wincount);
+            //miniBlueData.execSQL("UPDATE Results SET Win=Win+1");
+        }
+        else if(score==compscore)
+        {
+            if(cardcount<compcardcount)
+            {
+                Toast.makeText(v.getContext(), "You Lose", Toast.LENGTH_SHORT).show();
+                losscount++;
+                LossCount.setText("No. of Losses: "+losscount);
+                //miniBlueData.execSQL("UPDATE Results SET Loss=Loss+1");
+            }
+            else if(cardcount>compcardcount)
+            {
+                mp.start();
+                Toast.makeText(v.getContext(), str1, Toast.LENGTH_SHORT).show();
+                wincount++;
+                WinCount.setText("No. of Wins: "+wincount);
+                //miniBlueData.execSQL("UPDATE Results SET Win=Win+1");
+            }
+            else
+            {
+                Toast.makeText(v.getContext(),"Draw Game",Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
+            Toast.makeText(v.getContext(), "You Lose", Toast.LENGTH_SHORT).show();
+            losscount++;
+            LossCount.setText("No. of Losses: "+losscount);
+            //miniBlueData.execSQL("UPDATE Results SET Loss=Loss+1");
+        }
+
+        cent.setText( String.format("Probabilty of next card not going bust:  %.2f", prob));
+    }
+
     public void reset()
     {
         TextView scr=(TextView) findViewById(R.id.Score);
         TextView compscr=(TextView) findViewById(R.id.PCScore);
         score=0;
         compscore=0;
+        ace=0;
+        compace=0;
         scr.setText("Player: 0");
         compscr.setText("Computer: 0");
         deck1 = new deck();
