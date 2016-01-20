@@ -43,13 +43,18 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
     private card card1;
     MediaPlayer mp;
     MediaPlayer cf;
-    //SQLiteDatabase miniBlueData = SQLiteDatabase.openDatabase("MiniBlueDatabase",null,CREATE_IF_NECESSARY);
+//    SQLiteDatabase miniBlueData = SQLiteDatabase.openOrCreateDatabase("MiniBlueDatabase",null);
+    GameDb mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        mydb=new GameDb(this);
+        mydb.open();
+        mydb.createGame(0,0);
 
         Button reset;
         addCard=(Button) findViewById(R.id.addCard);
@@ -306,7 +311,8 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
             mp.start();
             Toast.makeText(v.getContext(), str1, Toast.LENGTH_SHORT).show();
             wincount++;
-            WinCount.setText("No. of Wins: "+wincount);
+            mydb.addWin();
+            WinCount.setText("No. of Wins: "+mydb.getWins());
             //miniBlueData.execSQL("UPDATE Results SET Win=Win+1");
         }
         else if(score==compscore)
@@ -315,7 +321,8 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
             {
                 Toast.makeText(v.getContext(), "You Lose", Toast.LENGTH_SHORT).show();
                 losscount++;
-                LossCount.setText("No. of Losses: "+losscount);
+                mydb.addLoss();
+                LossCount.setText("No. of Losses: "+mydb.getLoss());
                 //miniBlueData.execSQL("UPDATE Results SET Loss=Loss+1");
             }
             else if(cardcount>compcardcount)
@@ -323,7 +330,8 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
                 mp.start();
                 Toast.makeText(v.getContext(), str1, Toast.LENGTH_SHORT).show();
                 wincount++;
-                WinCount.setText("No. of Wins: "+wincount);
+                mydb.addWin();
+                WinCount.setText("No. of Wins: "+mydb.getWins());
                 //miniBlueData.execSQL("UPDATE Results SET Win=Win+1");
             }
             else
@@ -334,8 +342,8 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
         else {
             Toast.makeText(v.getContext(), "You Lose", Toast.LENGTH_SHORT).show();
             losscount++;
-            LossCount.setText("No. of Losses: "+losscount);
-            //miniBlueData.execSQL("UPDATE Results SET Loss=Loss+1");
+            mydb.addLoss();
+            LossCount.setText("No. of Losses: "+mydb.getLoss());
         }
 
         cent.setText( String.format("Probabilty of next card not going bust:  %.2f", prob));

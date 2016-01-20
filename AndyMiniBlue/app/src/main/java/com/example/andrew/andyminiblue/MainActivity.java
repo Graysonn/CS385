@@ -10,6 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button startgame;
+    Button stats;
 
 
     @Override
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         startgame = (Button) findViewById(R.id.newGamebutton);
         startgame.setOnClickListener(this);
+        stats= (Button) findViewById(R.id.statsButton);
+        stats.setOnClickListener(this);
 
     }
 
