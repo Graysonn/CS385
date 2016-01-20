@@ -95,6 +95,7 @@ public class FullscreenActivity extends AppCompatActivity {
         mContentView = findViewById(R.id.fullscreen_content);
 
 
+        //send the user to the next screen (MainActivity) after 5 seconds has passed
         Thread timer = new Thread() {
             public void run() {
                 try {

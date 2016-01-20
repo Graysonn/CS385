@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/stat_back"
+    tools:context="com.example.andrew.andyminiblue.Statistics">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No. Of Wins:"
+        android:id="@+id/winStat"
+        android:layout_marginTop="81dp"
+        style="@style/Info"
+        android:layout_below="@+id/lossStat"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        style="@style/Info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No. Of Losses:"
+        android:id="@+id/lossStat"
+        android:layout_marginTop="70dp"
+        android:layout_below="@+id/WinCount"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        style="@style/Info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Percentage Win:"
+        android:id="@+id/PercentWin"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

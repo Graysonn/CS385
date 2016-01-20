@@ -1,6 +1,5 @@
 package com.example.andrew.andyminiblue;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,7 +42,6 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
     private card card1;
     MediaPlayer mp;
     MediaPlayer cf;
-//    SQLiteDatabase miniBlueData = SQLiteDatabase.openOrCreateDatabase("MiniBlueDatabase",null);
     GameDb mydb;
 
     @Override
@@ -52,10 +50,12 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_main);
 
 
+        //open the database
         mydb=new GameDb(this);
         mydb.open();
         mydb.createGame(0,0);
 
+        //initialise the buttons and the mediaplayer for sounds
         Button reset;
         addCard=(Button) findViewById(R.id.addCard);
         addCard.setOnClickListener(this);
@@ -65,7 +65,6 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
         reset.setOnClickListener(this);
         mp = MediaPlayer.create(getApplicationContext(), R.raw.winnerwinnercut);
         cf = MediaPlayer.create(getApplicationContext(), R.raw.cardflip);
-        //miniBlueData.execSQL("CREATE TABLE IF NOT EXISTS Results(time TIMESTAMP,Win INTEGER,Loss Integer);");
 
         TextView scr = (TextView) findViewById(R.id.Score);
 
@@ -75,6 +74,7 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
         scr.setText("Player:0");
         compscr.setText("Computer:0");
 
+        //initialise the animations, need one for each different imageView (10)
         ani1 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
         ani1.setAnimationListener(this);
         ani2 = AnimationUtils.loadAnimation(this, R.anim.from_middle);
@@ -112,21 +112,26 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(final View v) {
 
+        //declare and initialise the TextViews
         TextView scr=(TextView) findViewById(R.id.Score);
         final TextView compscr=(TextView) findViewById(R.id.PCScore);
         cardface= (ImageView) findViewById(R.id.card);
         TextView cent= (TextView) findViewById(R.id.textView2);
 
+        //switch statement to determine which button was pressed
         switch (v.getId()) {
             case R.id.button:
 
-                double prob;//=deck1.probability(score);
+                double prob;
                 Handler mytimer=new Handler();
 
-
-
+                //draw a new card
                 card1 = deck1.getCard();
+
+                //play the card flip sound
                 cf.start();
+
+                //check which card to animate,
                 switch (compcardcount){
                     case 0:
                         findViewById(R.id.comCard1);
@@ -166,12 +171,15 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
                         findViewById(R.id.compCard5).clearAnimation();
                         findViewById(R.id.compCard5).setAnimation(PCani5);
                         findViewById(R.id.compCard5).startAnimation(PCani5);
+                        //reset compcardcount to allow it to reuse the first card if a 6th card is drawn
                         compcardcount=0;
                         break;
                 }
 
 
+                //increase the cards score by the correct amount
                 if (card1.getValue() == 1 && compscore < 11) {
+                    //Ace rules, 11 if it doesn't make you bust, need counter to allow for next card making bust
                     compace++;
                     compscore+=  11;
                 } else if(card1.getValue()>10)
@@ -186,8 +194,11 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
                     compscore -= 10;
                     compace--;
                 }
+                //update textview with new PC score
                 pcScore="Computer: "+compscore;
                 compscr.setText(pcScore);
+
+                //if Computer's Score is less than 16 run another stick method after 1 second
                 if(compscore<16){
                     mytimer.postDelayed(new Runnable() {
                         @Override
@@ -197,16 +208,24 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
                     }, 1000);
                 }
                 else {
+                    //run the end game method
                     endgame(v);
                 }
                 break;
 
+            //if it is the 'hit me' button
             case R.id.addCard:
+                //calculate probability
                 prob = deck1.probability(score);
+
+                //draw a new card and play the audio file
                 card1=deck1.getCard();
                 cf.start();
 
+                //disable button to ensure two clicks don't happen too fast.
                 addCard.setEnabled(false);
+
+                //enable the button after .5 second
                 addCard.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -214,6 +233,7 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
                     }
                 }, 500);
 
+                //Run the relevant animation for the cardflip
                 if(cardcount==0) {
                     findViewById(R.id.card);
                     findViewById(R.id.card).setVisibility(View.VISIBLE);
@@ -248,12 +268,14 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
                     findViewById(R.id.card5).clearAnimation();
                     findViewById(R.id.card5).setAnimation(ani6);
                     findViewById(R.id.card5).startAnimation(ani6);
+                    //reset to 0 to allow for 6th card to be flipped on 1st card
                     cardcount=0;
                 }
 
-
+                //update the score
                 if (card1.getValue()==1 && score<11)
                 {
+                    //special Ace rules
                     score+=11;
                     ace++;
                 }
@@ -267,15 +289,20 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
                 }
                 if(score>21 & ace>0)
                 {
+                    //allow for previous ace being played
                     score-=10;
                     ace--;
                 }
 
+                //update the score textview with the new score
                 userScore = "Player: "+score;
                 scr.setText(userScore);
+
+                //test if user has gone bust
                 if(score>21) {
                     Toast.makeText(v.getContext(), "BUST", Toast.LENGTH_LONG).show();
                     cent.setText(String.format("Probability of your last card not going bust:  %.2f", prob));
+                    //disable button and after 1 second play as if user had hit the 'stick' button
                     addCard.setEnabled(false);
                     Handler mybusttimer= new Handler();
                     mybusttimer.postDelayed(new Runnable() {
@@ -288,6 +315,7 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
 
 
                 break;
+            //if player hits the 'play again' button run the reset method
             case R.id.reset:
                 reset();
                 break;
@@ -296,71 +324,97 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    //endgame methd, final stage in game after stick leaves it's loop (computer score>16, && user chosen to finish or gone bust)
     public void endgame(View v)
     {
 
+        //calculate the probabilty of next card making user bust
         double prob=deck1.probability(score);
 
+        //declare and initialise the Textviews
         TextView cent= (TextView) findViewById(R.id.textView2);
-        TextView WinCount=(TextView) findViewById(R.id.WinCount);
-        TextView LossCount=(TextView) findViewById(R.id.LossCount);
+
+        //define a win string
         String str1 = "You Win";
 
+        //test who won,
+        //user win
         if((score>compscore && score<22) || (score<22 && compscore>21))
         {
+            //user win
+
+            //play winning audio
             mp.start();
+
+            //send win string to screen as a toast
             Toast.makeText(v.getContext(), str1, Toast.LENGTH_SHORT).show();
-            wincount++;
+
+            //add the win to the database
             mydb.addWin();
-            WinCount.setText("No. of Wins: "+mydb.getWins());
-            //miniBlueData.execSQL("UPDATE Results SET Win=Win+1");
+
         }
+        //same score, test who has more cards
         else if(score==compscore)
         {
             if(cardcount<compcardcount)
             {
+                //send the string saying you lose to the screen as a toast
                 Toast.makeText(v.getContext(), "You Lose", Toast.LENGTH_SHORT).show();
-                losscount++;
+                //add the loss to the database
                 mydb.addLoss();
-                LossCount.setText("No. of Losses: "+mydb.getLoss());
-                //miniBlueData.execSQL("UPDATE Results SET Loss=Loss+1");
             }
             else if(cardcount>compcardcount)
             {
+                //play the winning audio
                 mp.start();
+
+                //send the string to the screen as a toast
                 Toast.makeText(v.getContext(), str1, Toast.LENGTH_SHORT).show();
-                wincount++;
+
+                //add the win to the database
                 mydb.addWin();
-                WinCount.setText("No. of Wins: "+mydb.getWins());
-                //miniBlueData.execSQL("UPDATE Results SET Win=Win+1");
+
             }
             else
             {
+                //tell the user that the game was a draw
                 Toast.makeText(v.getContext(),"Draw Game",Toast.LENGTH_SHORT).show();
             }
         }
+        //copmuter win
         else {
+            //send toast to the screen saying you lose
             Toast.makeText(v.getContext(), "You Lose", Toast.LENGTH_SHORT).show();
-            losscount++;
-            mydb.addLoss();
-            LossCount.setText("No. of Losses: "+mydb.getLoss());
-        }
 
+            //add the loss to the database
+            mydb.addLoss();
+        }
+        //set the textview to the probability of going bust
         cent.setText( String.format("Probabilty of next card not going bust:  %.2f", prob));
     }
 
+    //reset method
     public void reset()
     {
+        //declare and initialise textviews
         TextView scr=(TextView) findViewById(R.id.Score);
         TextView compscr=(TextView) findViewById(R.id.PCScore);
+
+        //reset the scores and number of aces to 0
         score=0;
         compscore=0;
         ace=0;
         compace=0;
+
+        //reset the textviews to say that each score is 0
         scr.setText("Player: 0");
         compscr.setText("Computer: 0");
+
+        //set the deck to equal a new deck and enable the 'hit me' button
         deck1 = new deck();
         addCard.setEnabled(true);
+
+        //reset the card count and reset all the card animations to show the back of the card, and to be invisible
         cardcount=0;
         compcardcount=0;
         ((ImageView)findViewById(R.id.card)).setImageResource(R.drawable.redcardback);
@@ -392,56 +446,37 @@ public class gameScreen extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onAnimationEnd(Animation animation) {
+        //run the relevant animation, each animation runs for a different Image View, so 10 in total, 5 user cards, 5 computer cards
         if (animation==ani1) {
             ((ImageView)findViewById(R.id.card)).setImageResource(card1.getFace());
             findViewById(R.id.card).clearAnimation();
-            findViewById(R.id.card).setAnimation(ani2);
-            findViewById(R.id.card).startAnimation(ani2);
         }else if (animation==ani3){
             ((ImageView)findViewById(R.id.card2)).setImageResource(card1.getFace());
             findViewById(R.id.card2).clearAnimation();
-            findViewById(R.id.card2).setAnimation(ani2);
-            findViewById(R.id.card2).startAnimation(ani2);
         }else if (animation==ani4) {
             ((ImageView)findViewById(R.id.card3)).setImageResource(card1.getFace());
             findViewById(R.id.card3).clearAnimation();
-            findViewById(R.id.card3).setAnimation(ani2);
-            findViewById(R.id.card3).startAnimation(ani2);
         } else if (animation==ani5) {
             ((ImageView)findViewById(R.id.card4)).setImageResource(card1.getFace());
            findViewById(R.id.card4).clearAnimation();
-            findViewById(R.id.card4).setAnimation(ani2);
-            findViewById(R.id.card4).startAnimation(ani2);
         } else if (animation==ani6) {
             ((ImageView)findViewById(R.id.card5)).setImageResource(card1.getFace());
             findViewById(R.id.card5).clearAnimation();
-            findViewById(R.id.card5).setAnimation(ani2);
-            findViewById(R.id.card5).startAnimation(ani2);
         }else if (animation==PCani1) {
             ((ImageView)findViewById(R.id.comCard1)).setImageResource(card1.getFace());
             findViewById(R.id.comCard1).clearAnimation();
-            findViewById(R.id.comCard1).setAnimation(ani2);
-            findViewById(R.id.comCard1).startAnimation(ani2);
         }else if (animation==PCani2) {
             ((ImageView)findViewById(R.id.compCard2)).setImageResource(card1.getFace());
             findViewById(R.id.compCard2).clearAnimation();
-            findViewById(R.id.compCard2).setAnimation(ani2);
-            findViewById(R.id.compCard2).startAnimation(ani2);
         }else if (animation==PCani3) {
             ((ImageView)findViewById(R.id.compCard3)).setImageResource(card1.getFace());
             findViewById(R.id.compCard3).clearAnimation();
-            findViewById(R.id.compCard3).setAnimation(ani2);
-            findViewById(R.id.compCard3).startAnimation(ani2);
         }else if (animation==PCani4) {
             ((ImageView)findViewById(R.id.compCard4)).setImageResource(card1.getFace());
             findViewById(R.id.compCard4).clearAnimation();
-            findViewById(R.id.compCard4).setAnimation(ani2);
-            findViewById(R.id.compCard4).startAnimation(ani2);
         }else if (animation==PCani5) {
             ((ImageView)findViewById(R.id.compCard5)).setImageResource(card1.getFace());
             findViewById(R.id.compCard5).clearAnimation();
-            findViewById(R.id.compCard5).setAnimation(ani2);
-            findViewById(R.id.compCard5).startAnimation(ani2);
         }
     }
 

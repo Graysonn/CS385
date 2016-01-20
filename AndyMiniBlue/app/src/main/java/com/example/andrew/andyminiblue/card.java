@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 /**
- * Created by Andrew on 13-Dec-15.
+ * Created by Andrew Garrad on 13-Dec-15.
  */
 public class card extends Drawable {
 
@@ -12,12 +12,14 @@ public class card extends Drawable {
     private int suit;
     private int face;
 
+    //constructor, takes in a int and sets the rank and suit accordingly
     public card(int val)
     {
         rank=1+val%13;
         suit=val/13;
     }
 
+    //method to return the suit of the cards, only used in original testing
     public String getSuit()
     {
         if(suit==3)
@@ -30,6 +32,7 @@ public class card extends Drawable {
             return "clubs";
     }
 
+    //method to return the String rank of the card, only used in original testing
     public String getRank()
     {
         String Rank=""+rank;
@@ -48,6 +51,7 @@ public class card extends Drawable {
 
     }
 
+    //method that returns the value of the card, for face cards (Jack, Queen, King) returns 10, otherwise it returns the rank
     public int getValue()
     {
 
@@ -57,9 +61,11 @@ public class card extends Drawable {
             return rank;
     }
 
-
+    //method to return the Id of the face of the card uses a nested switch statement (first switch is the suit, inner switch is the value
+    //for each result return the drawable of the relevant card
     public int getFace(){
         switch (suit) {
+            //suit=0, Clubs
             case 0:
                 switch (rank) {
                     case 1:
@@ -107,7 +113,7 @@ public class card extends Drawable {
                 }
                 break;
 
-
+            //suit=1, Spades
             case 1:
                 switch (rank) {
                     case 1:
@@ -155,7 +161,7 @@ public class card extends Drawable {
                 }
                 break;
 
-
+            //suit=2, Hearts
             case 2:
                 switch (rank) {
                     case 1:
@@ -203,6 +209,7 @@ public class card extends Drawable {
                 }
                 break;
 
+            //suit=3, Diamonds
             case 3:
                 switch (rank) {
                     case 1:

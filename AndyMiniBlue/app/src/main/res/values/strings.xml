@@ -10,4 +10,5 @@
     <string name="title_activity_card_game">CardGame</string>
 
     <string name="title_activity_game_screen">gameScreen</string>
+    <string name="title_activity_statistics">Statistics</string>
 </resources>

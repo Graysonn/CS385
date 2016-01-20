@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_game_screen);
 
+        //declare and initialise the buttons that are used, new game button and stats screen button, turn on onClickListener for both
         startgame = (Button) findViewById(R.id.newGamebutton);
         startgame.setOnClickListener(this);
         stats= (Button) findViewById(R.id.statsButton);
@@ -39,10 +40,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        //if clicked use a switch statement to check which button was pressed
+        //use an intent to send the user to the relevant screen
         switch (v.getId()) {
             case R.id.newGamebutton:
                 Intent intent = new Intent("android.intent.action.GAMESCREEN");
                 startActivity(intent);
+                break;
+            case R.id.statsButton:
+                Intent intentStat = new Intent("android.intent.action.STATISTICS");
+                startActivity(intentStat);
+                break;
         }
 
     }

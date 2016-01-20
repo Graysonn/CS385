@@ -1,7 +1,7 @@
 package com.example.andrew.andyminiblue;
 
 /**
- * Created by Andrew on 20-Jan-16.
+ * Created by Andrew Garrad on 20-Jan-16.
  */
 
         import android.content.ContentValues;
@@ -14,6 +14,7 @@ package com.example.andrew.andyminiblue;
 
 public class GameDb {
 
+    //define the name of the columns
     public static final String KEY_ROWID = "GameID";
     public static final String KEY_WIN = "Win";
     public static final String KEY_LOSS = "Loss";
@@ -21,15 +22,18 @@ public class GameDb {
 
 
     private static final String TAG = "GameDb";
+    //create a SQLite Database and a database helper
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase mDb;
 
+    //define the database name and table name
     private static final String DATABASE_NAME = "GameScore";
     private static final String SQLITE_TABLE = "Win_and_Lose";
     private static final int DATABASE_VERSION = 9;
 
     private final Context mCtx;
 
+    //method that creates a database, only creates the table if it doesn't exist
     private static final String DATABASE_CREATE =
             "CREATE TABLE if not exists " + SQLITE_TABLE + " (" +
                     KEY_ROWID + " integer PRIMARY KEY," +
@@ -44,6 +48,7 @@ public class GameDb {
         }
 
 
+        //onCreate method that creates a database and adds in two rows
         @Override
         public void onCreate(SQLiteDatabase db) {
             Log.w(TAG, DATABASE_CREATE);
@@ -99,14 +104,8 @@ public class GameDb {
 
     public String getWins() {
         Cursor c= mDb.query(SQLITE_TABLE, new String[] { KEY_ROWID, KEY_WIN, KEY_LOSS}, KEY_ROWID + "=?", new String[] {String.valueOf(1)},null,null,null,null);
-        //Cursor d =mDb.query(SQLITE_TABLE,)
 
-
-        if(!c.moveToFirst())
-        {
-            return "99";
-        }
-
+        //Move cursor to the first value and return the win value
         String ret="nope";
         if(c !=null) {
             c.moveToFirst();
@@ -120,10 +119,7 @@ public class GameDb {
     public String getLoss() {
         Cursor c= mDb.query(SQLITE_TABLE, new String[] {KEY_ROWID, KEY_WIN, KEY_LOSS}, KEY_ROWID + "=?",new String[] {String.valueOf(1)}, null, null, null, null);
 
-        if(!c.moveToFirst())
-        {
-            return "99";
-        }
+        //Move cursor to the first value and return the loss value
         String ret="nope";
         if(c !=null) {
             c.moveToFirst();
@@ -132,12 +128,14 @@ public class GameDb {
         return ret;
     }
 
+    //method that updates the table by incrementing the win value, note must close the cursor
     public void addWin(){
         Cursor c=mDb.rawQuery("UPDATE " + SQLITE_TABLE + " SET " + KEY_WIN + " = " + KEY_WIN + " +1", null);
         c.moveToFirst();
         c.close();
     }
 
+    //method that updates the table by incrementing the Loss value, note must close the cursor
     public void addLoss(){
         Cursor c=mDb.rawQuery("UPDATE " + SQLITE_TABLE + " SET " + KEY_LOSS + " = " + KEY_LOSS + " +1", null);
         c.moveToFirst();
