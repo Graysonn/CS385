@@ -1,9 +1,5 @@
 package com.example.andrew.andyminiblue;
 
-/**
- * Created by Andrew Garrad on 31-Dec-15.
- */
-
 
 public class deck {
     //create an array of 52 cards

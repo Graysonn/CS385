@@ -3,9 +3,7 @@ package com.example.andrew.andyminiblue;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
-/**
- * Created by Andrew Garrad on 13-Dec-15.
- */
+
 public class card extends Drawable {
 
     private int rank;

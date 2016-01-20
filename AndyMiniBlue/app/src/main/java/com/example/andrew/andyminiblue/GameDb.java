@@ -1,8 +1,5 @@
 package com.example.andrew.andyminiblue;
 
-/**
- * Created by Andrew Garrad on 20-Jan-16.
- */
 
         import android.content.ContentValues;
         import android.content.Context;
